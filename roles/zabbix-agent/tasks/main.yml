@@ -1,0 +1,19 @@
+---
+# tasks file for zabbix-agent
+- name: Download zabbix-agent
+  get_url:
+    url: https://repo.zabbix.com/zabbix/4.2/rhel/7/x86_64/zabbix-agent-4.2.7-1.el7.x86_64.rpm
+    dest: /tmp/zabbix-agent-4.2.7-1.el7.x86_64.rpm
+    mode: 0777
+
+- name: Installing zabbix-agent
+  yum: name=/tmp/zabbix-agent-4.2.7-1.el7.x86_64.rpm state=present
+
+- name: Template archive zabbix.conf
+  template:
+     src: zabbix_agentd.conf.j2
+     dest: /etc/zabbix/zabbix_agentd.conf
+
+- name: Start and enabled boot zabbix-agent
+  service: name=zabbix-agent state=started enabled=yes
+~                                                      
