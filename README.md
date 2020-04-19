@@ -11,7 +11,7 @@ Move the directories / playbooks and / roles to the / etc / ansible directory, t
 127.0.0.1
 
 # To test host communication
-#ansible localhost -c local -m ping
+#ansible localhost -c local -mping
 
 # Run the file # playbook.yml found in the directory / playbooks
 #ansible-playbook -c local playbooks / playbook.yml
