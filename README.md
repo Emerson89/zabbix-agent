@@ -1,4 +1,3 @@
-#TESTE
 # zabbix-agent via ansible
 The installation was performed on localhost change your inventory file for installation on more hosts, there is a template file from zabbix_config enter the IP of zabbix_server.For installation on localhost follow below
 Move the directories / playbooks and / roles to the / etc / ansible directory, the installation was done on localhost and edit the hosts inventory file.
