@@ -1,7 +1,0 @@
-- name: Installing zabbix-agent
-  hosts: localhost
-  become: yes
-
-  roles:
-     - zabbix-agent
-

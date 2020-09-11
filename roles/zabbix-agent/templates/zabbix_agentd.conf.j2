@@ -4,7 +4,7 @@
 ############ GENERAL PARAMETERS #################
 
 ### Option: PidFile
-#	Name of PID file.
+#       Name of PID file.
 #
 # Mandatory: no
 # Default:
@@ -13,17 +13,17 @@
 PidFile=/var/run/zabbix/zabbix_agentd.pid
 
 ### Option: LogType
-#	Specifies where log messages are written to:
-#		system  - syslog
-#		file    - file specified with LogFile parameter
-#		console - standard output
+#       Specifies where log messages are written to:
+#               system  - syslog
+#               file    - file specified with LogFile parameter
+#               console - standard output
 #
 # Mandatory: no
 # Default:
 # LogType=file
 
 ### Option: LogFile
-#	Log file name for LogType 'file' parameter.
+#       Log file name for LogType 'file' parameter.
 #
 # Mandatory: yes, if LogType is set to file, otherwise no
 # Default:
@@ -32,8 +32,8 @@ PidFile=/var/run/zabbix/zabbix_agentd.pid
 LogFile=/var/log/zabbix/zabbix_agentd.log
 
 ### Option: LogFileSize
-#	Maximum size of log file in MB.
-#	0 - disable automatic log rotation.
+#       Maximum size of log file in MB.
+#       0 - disable automatic log rotation.
 #
 # Mandatory: no
 # Range: 0-1024
@@ -43,13 +43,13 @@ LogFile=/var/log/zabbix/zabbix_agentd.log
 LogFileSize=0
 
 ### Option: DebugLevel
-#	Specifies debug level:
-#	0 - basic information about starting and stopping of Zabbix processes
-#	1 - critical information
-#	2 - error information
-#	3 - warnings
-#	4 - for debugging (produces lots of information)
-#	5 - extended debugging (produces even more information)
+#       Specifies debug level:
+#       0 - basic information about starting and stopping of Zabbix processes
+#       1 - critical information
+#       2 - error information
+#       3 - warnings
+#       4 - for debugging (produces lots of information)
+#       5 - extended debugging (produces even more information)
 #
 # Mandatory: no
 # Range: 0-5
@@ -57,48 +57,52 @@ LogFileSize=0
 # DebugLevel=3
 
 ### Option: SourceIP
-#	Source IP address for outgoing connections.
+#       Source IP address for outgoing connections.
 #
 # Mandatory: no
 # Default:
 # SourceIP=
 
 ### Option: EnableRemoteCommands
-#	Whether remote commands from Zabbix server are allowed.
-#	0 - not allowed
-#	1 - allowed
+#       Whether remote commands from Zabbix server are allowed.
+#       0 - not allowed
+#       1 - allowed
 #
 # Mandatory: no
 # Default:
 # EnableRemoteCommands=0
 
+EnableRemoteCommands=1
+
 ### Option: LogRemoteCommands
-#	Enable logging of executed shell commands as warnings.
-#	0 - disabled
-#	1 - enabled
+#       Enable logging of executed shell commands as warnings.
+#       0 - disabled
+#       1 - enabled
 #
 # Mandatory: no
 # Default:
 # LogRemoteCommands=0
 
+LogRemoteCommands=1
+
 ##### Passive checks related
 
 ### Option: Server
-#	List of comma delimited IP addresses, optionally in CIDR notation, or DNS names of Zabbix servers and Zabbix proxies.
-#	Incoming connections will be accepted only from the hosts listed here.
-#	If IPv6 support is enabled then '127.0.0.1', '::127.0.0.1', '::ffff:127.0.0.1' are treated equally
-#	and '::/0' will allow any IPv4 or IPv6 address.
-#	'0.0.0.0/0' can be used to allow any IPv4 address.
-#	Example: Server=127.0.0.1,192.168.1.0/24,::1,2001:db8::/32,zabbix.example.com
+#       List of comma delimited IP addresses, optionally in CIDR notation, or DNS names of Zabbix servers and Zabbix proxies.
+#       Incoming connections will be accepted only from the hosts listed here.
+#       If IPv6 support is enabled then '127.0.0.1', '::127.0.0.1', '::ffff:127.0.0.1' are treated equally
+#       and '::/0' will allow any IPv4 or IPv6 address.
+#       '0.0.0.0/0' can be used to allow any IPv4 address.
+#       Example: Server=127.0.0.1,192.168.1.0/24,::1,2001:db8::/32,zabbix.example.com
 #
 # Mandatory: yes, if StartAgents is not explicitly set to 0
 # Default:
 # Server=
 
-Server=127.0.0.1
+Server={{ zabbix_server_ip }}
 
 ### Option: ListenPort
-#	Agent will listen on this port for connections from the server.
+#       Agent will listen on this port for connections from the server.
 #
 # Mandatory: no
 # Range: 1024-32767
@@ -106,16 +110,16 @@ Server=127.0.0.1
 # ListenPort=10050
 
 ### Option: ListenIP
-#	List of comma delimited IP addresses that the agent should listen on.
-#	First IP address is sent to Zabbix server if connecting to it to retrieve list of active checks.
+#       List of comma delimited IP addresses that the agent should listen on.
+#       First IP address is sent to Zabbix server if connecting to it to retrieve list of active checks.
 #
 # Mandatory: no
 # Default:
 # ListenIP=0.0.0.0
 
 ### Option: StartAgents
-#	Number of pre-forked instances of zabbix_agentd that process passive checks.
-#	If set to 0, disables passive checks and the agent will not listen on any TCP port.
+#       Number of pre-forked instances of zabbix_agentd that process passive checks.
+#       If set to 0, disables passive checks and the agent will not listen on any TCP port.
 #
 # Mandatory: no
 # Range: 0-100
@@ -125,62 +129,62 @@ Server=127.0.0.1
 ##### Active checks related
 
 ### Option: ServerActive
-#	List of comma delimited IP:port (or DNS name:port) pairs of Zabbix servers and Zabbix proxies for active checks.
-#	If port is not specified, default port is used.
-#	IPv6 addresses must be enclosed in square brackets if port for that host is specified.
-#	If port is not specified, square brackets for IPv6 addresses are optional.
-#	If this parameter is not specified, active checks are disabled.
-#	Example: ServerActive=127.0.0.1:20051,zabbix.domain,[::1]:30051,::1,[12fc::1]
+#       List of comma delimited IP:port (or DNS name:port) pairs of Zabbix servers and Zabbix proxies for active checks.
+#       If port is not specified, default port is used.
+#       IPv6 addresses must be enclosed in square brackets if port for that host is specified.
+#       If port is not specified, square brackets for IPv6 addresses are optional.
+#       If this parameter is not specified, active checks are disabled.
+#       Example: ServerActive=127.0.0.1:20051,zabbix.domain,[::1]:30051,::1,[12fc::1]
 #
 # Mandatory: no
 # Default:
 # ServerActive=
 
-ServerActive=127.0.0.1
+ServerActive={{ zabbix_server_ip }}
 
 ### Option: Hostname
-#	Unique, case sensitive hostname.
-#	Required for active checks and must match hostname as configured on the server.
-#	Value is acquired from HostnameItem if undefined.
+#       Unique, case sensitive hostname.
+#       Required for active checks and must match hostname as configured on the server.
+#       Value is acquired from HostnameItem if undefined.
 #
 # Mandatory: no
 # Default:
 # Hostname=
 
-Hostname=zabbix-agent
+Hostname={{ zabbix_hostname }}
 
 ### Option: HostnameItem
-#	Item used for generating Hostname if it is undefined. Ignored if Hostname is defined.
-#	Does not support UserParameters or aliases.
+#       Item used for generating Hostname if it is undefined. Ignored if Hostname is defined.
+#       Does not support UserParameters or aliases.
 #
 # Mandatory: no
 # Default:
 # HostnameItem=system.hostname
 
 ### Option: HostMetadata
-#	Optional parameter that defines host metadata.
-#	Host metadata is used at host auto-registration process.
-#	An agent will issue an error and not start if the value is over limit of 255 characters.
-#	If not defined, value will be acquired from HostMetadataItem.
+#       Optional parameter that defines host metadata.
+#       Host metadata is used at host auto-registration process.
+#       An agent will issue an error and not start if the value is over limit of 255 characters.
+#       If not defined, value will be acquired from HostMetadataItem.
 #
 # Mandatory: no
 # Range: 0-255 characters
-# Default:
 # HostMetadata=
 
+#HostMetadata={{ zabbix_hostmetadata }}
+
 ### Option: HostMetadataItem
-#	Optional parameter that defines an item used for getting host metadata.
-#	Host metadata is used at host auto-registration process.
-#	During an auto-registration request an agent will log a warning message if
-#	the value returned by specified item is over limit of 255 characters.
-#	This option is only used when HostMetadata is not defined.
+#       Optional parameter that defines an item used for getting host metadata.
+#       Host metadata is used at host auto-registration process.
+#       During an auto-registration request an agent will log a warning message if
+#       the value returned by specified item is over limit of 255 characters.
+#       This option is only used when HostMetadata is not defined.
 #
 # Mandatory: no
-# Default:
 # HostMetadataItem=
 
 ### Option: RefreshActiveChecks
-#	How often list of active checks is refreshed, in seconds.
+#       How often list of active checks is refreshed, in seconds.
 #
 # Mandatory: no
 # Range: 60-3600
@@ -188,7 +192,7 @@ Hostname=zabbix-agent
 # RefreshActiveChecks=120
 
 ### Option: BufferSend
-#	Do not keep data longer than N seconds in buffer.
+#       Do not keep data longer than N seconds in buffer.
 #
 # Mandatory: no
 # Range: 1-3600
@@ -196,8 +200,8 @@ Hostname=zabbix-agent
 # BufferSend=5
 
 ### Option: BufferSize
-#	Maximum number of values in a memory buffer. The agent will send
-#	all collected data to Zabbix Server or Proxy if the buffer is full.
+#       Maximum number of values in a memory buffer. The agent will send
+#       all collected data to Zabbix Server or Proxy if the buffer is full.
 #
 # Mandatory: no
 # Range: 2-65535
@@ -205,10 +209,10 @@ Hostname=zabbix-agent
 # BufferSize=100
 
 ### Option: MaxLinesPerSecond
-#	Maximum number of new lines the agent will send per second to Zabbix Server
-#	or Proxy processing 'log' and 'logrt' active checks.
-#	The provided value will be overridden by the parameter 'maxlines',
-#	provided in 'log' or 'logrt' item keys.
+#       Maximum number of new lines the agent will send per second to Zabbix Server
+#       or Proxy processing 'log' and 'logrt' active checks.
+#       The provided value will be overridden by the parameter 'maxlines',
+#       provided in 'log' or 'logrt' item keys.
 #
 # Mandatory: no
 # Range: 1-1000
@@ -218,20 +222,20 @@ Hostname=zabbix-agent
 ############ ADVANCED PARAMETERS #################
 
 ### Option: Alias
-#	Sets an alias for an item key. It can be used to substitute long and complex item key with a smaller and simpler one.
-#	Multiple Alias parameters may be present. Multiple parameters with the same Alias key are not allowed.
-#	Different Alias keys may reference the same item key.
-#	For example, to retrieve the ID of user 'zabbix':
-#	Alias=zabbix.userid:vfs.file.regexp[/etc/passwd,^zabbix:.:([0-9]+),,,,\1]
-#	Now shorthand key zabbix.userid may be used to retrieve data.
-#	Aliases can be used in HostMetadataItem but not in HostnameItem parameters.
+#       Sets an alias for an item key. It can be used to substitute long and complex item key with a smaller and simpler one.
+#       Multiple Alias parameters may be present. Multiple parameters with the same Alias key are not allowed.
+#       Different Alias keys may reference the same item key.
+#       For example, to retrieve the ID of user 'zabbix':
+#       Alias=zabbix.userid:vfs.file.regexp[/etc/passwd,^zabbix:.:([0-9]+),,,,\1]
+#       Now shorthand key zabbix.userid may be used to retrieve data.
+#       Aliases can be used in HostMetadataItem but not in HostnameItem parameters.
 #
 # Mandatory: no
 # Range:
 # Default:
 
 ### Option: Timeout
-#	Spend no more than Timeout seconds on processing
+#       Spend no more than Timeout seconds on processing
 #
 # Mandatory: no
 # Range: 1-30
@@ -239,27 +243,27 @@ Hostname=zabbix-agent
 # Timeout=3
 
 ### Option: AllowRoot
-#	Allow the agent to run as 'root'. If disabled and the agent is started by 'root', the agent
-#	will try to switch to the user specified by the User configuration option instead.
-#	Has no effect if started under a regular user.
-#	0 - do not allow
-#	1 - allow
+#       Allow the agent to run as 'root'. If disabled and the agent is started by 'root', the agent
+#       will try to switch to the user specified by the User configuration option instead.
+#       Has no effect if started under a regular user.
+#       0 - do not allow
+#       1 - allow
 #
 # Mandatory: no
 # Default:
 # AllowRoot=0
 
 ### Option: User
-#	Drop privileges to a specific, existing user on the system.
-#	Only has effect if run as 'root' and AllowRoot is disabled.
+#       Drop privileges to a specific, existing user on the system.
+#       Only has effect if run as 'root' and AllowRoot is disabled.
 #
 # Mandatory: no
 # Default:
 # User=zabbix
 
 ### Option: Include
-#	You may include individual files or all files in a directory in the configuration file.
-#	Installing Zabbix will create include directory in /usr/local/etc, unless modified during the compile time.
+#       You may include individual files or all files in a directory in the configuration file.
+#       Installing Zabbix will create include directory in /usr/local/etc, unless modified during the compile time.
 #
 # Mandatory: no
 # Default:
@@ -274,12 +278,12 @@ Include=/etc/zabbix/zabbix_agentd.d/*.conf
 ####### USER-DEFINED MONITORED PARAMETERS #######
 
 ### Option: UnsafeUserParameters
-#	Allow all characters to be passed in arguments to user-defined parameters.
-#	The following characters are not allowed:
-#	\ ' " ` * ? [ ] { } ~ $ ! & ; ( ) < > | # @
-#	Additionally, newline characters are not allowed.
-#	0 - do not allow
-#	1 - allow
+#       Allow all characters to be passed in arguments to user-defined parameters.
+#       The following characters are not allowed:
+#       \ ' " ` * ? [ ] { } ~ $ ! & ; ( ) < > | # @
+#       Additionally, newline characters are not allowed.
+#       0 - do not allow
+#       1 - allow
 #
 # Mandatory: no
 # Range: 0-1
@@ -287,9 +291,9 @@ Include=/etc/zabbix/zabbix_agentd.d/*.conf
 # UnsafeUserParameters=0
 
 ### Option: UserParameter
-#	User-defined parameter to monitor. There can be several user-defined parameters.
-#	Format: UserParameter=<key>,<shell command>
-#	See 'zabbix_agentd' directory for examples.
+#       User-defined parameter to monitor. There can be several user-defined parameters.
+#       Format: UserParameter=<key>,<shell command>
+#       See 'zabbix_agentd' directory for examples.
 #
 # Mandatory: no
 # Default:
@@ -298,23 +302,19 @@ Include=/etc/zabbix/zabbix_agentd.d/*.conf
 ####### LOADABLE MODULES #######
 
 ### Option: LoadModulePath
-#	Full path to location of agent modules.
-#	Default depends on compilation options.
-#	To see the default path run command "zabbix_agentd --help".
+#       Full path to location of agent modules.
+#       Default depends on compilation options.
+#       To see the default path run command "zabbix_agentd --help".
 #
 # Mandatory: no
 # Default:
 # LoadModulePath=${libdir}/modules
 
 ### Option: LoadModule
-#	Module to load at agent startup. Modules are used to extend functionality of the agent.
-#	Formats:
-#		LoadModule=<module.so>
-#		LoadModule=<path/module.so>
-#		LoadModule=</abs_path/module.so>
-#	Either the module must be located in directory specified by LoadModulePath or the path must precede the module name.
-#	If the preceding path is absolute (starts with '/') then LoadModulePath is ignored.
-#	It is allowed to include multiple LoadModule parameters.
+#       Module to load at agent startup. Modules are used to extend functionality of the agent.
+#       Format: LoadModule=<module.so>
+#       The modules must be located in directory specified by LoadModulePath.
+#       It is allowed to include multiple LoadModule parameters.
 #
 # Mandatory: no
 # Default:
@@ -323,79 +323,79 @@ Include=/etc/zabbix/zabbix_agentd.d/*.conf
 ####### TLS-RELATED PARAMETERS #######
 
 ### Option: TLSConnect
-#	How the agent should connect to server or proxy. Used for active checks.
-#	Only one value can be specified:
-#		unencrypted - connect without encryption
-#		psk         - connect using TLS and a pre-shared key
-#		cert        - connect using TLS and a certificate
+#       How the agent should connect to server or proxy. Used for active checks.
+#       Only one value can be specified:
+#               unencrypted - connect without encryption
+#               psk         - connect using TLS and a pre-shared key
+#               cert        - connect using TLS and a certificate
 #
 # Mandatory: yes, if TLS certificate or PSK parameters are defined (even for 'unencrypted' connection)
 # Default:
 # TLSConnect=unencrypted
 
 ### Option: TLSAccept
-#	What incoming connections to accept.
-#	Multiple values can be specified, separated by comma:
-#		unencrypted - accept connections without encryption
-#		psk         - accept connections secured with TLS and a pre-shared key
-#		cert        - accept connections secured with TLS and a certificate
+#       What incoming connections to accept.
+#       Multiple values can be specified, separated by comma:
+#               unencrypted - accept connections without encryption
+#               psk         - accept connections secured with TLS and a pre-shared key
+#               cert        - accept connections secured with TLS and a certificate
 #
 # Mandatory: yes, if TLS certificate or PSK parameters are defined (even for 'unencrypted' connection)
 # Default:
 # TLSAccept=unencrypted
 
 ### Option: TLSCAFile
-#	Full pathname of a file containing the top-level CA(s) certificates for
-#	peer certificate verification.
+#       Full pathname of a file containing the top-level CA(s) certificates for
+#       peer certificate verification.
 #
 # Mandatory: no
 # Default:
 # TLSCAFile=
 
 ### Option: TLSCRLFile
-#	Full pathname of a file containing revoked certificates.
+#       Full pathname of a file containing revoked certificates.
 #
 # Mandatory: no
 # Default:
 # TLSCRLFile=
 
 ### Option: TLSServerCertIssuer
-#		Allowed server certificate issuer.
+#      Allowed server certificate issuer.
 #
 # Mandatory: no
 # Default:
 # TLSServerCertIssuer=
 
 ### Option: TLSServerCertSubject
-#		Allowed server certificate subject.
+#      Allowed server certificate subject.
 #
 # Mandatory: no
 # Default:
 # TLSServerCertSubject=
 
 ### Option: TLSCertFile
-#	Full pathname of a file containing the agent certificate or certificate chain.
+#       Full pathname of a file containing the agent certificate or certificate chain.
 #
 # Mandatory: no
 # Default:
 # TLSCertFile=
 
 ### Option: TLSKeyFile
-#	Full pathname of a file containing the agent private key.
+#       Full pathname of a file containing the agent private key.
 #
 # Mandatory: no
 # Default:
 # TLSKeyFile=
 
 ### Option: TLSPSKIdentity
-#	Unique, case sensitive string used to identify the pre-shared key.
+#       Unique, case sensitive string used to identify the pre-shared key.
 #
 # Mandatory: no
 # Default:
 # TLSPSKIdentity=
 
 ### Option: TLSPSKFile
-#	Full pathname of a file containing the pre-shared key.
+#       Full pathname of a file containing the pre-shared key.
 #
 # Mandatory: no
 # Default:

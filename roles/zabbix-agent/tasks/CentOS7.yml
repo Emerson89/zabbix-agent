@@ -1,0 +1,42 @@
+---
+    - name: user zabbix in visudoers
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: 'zabbix ALL=NOPASSWD: ALL'
+        
+    - name: Instalando Zabbix Agent
+      yum:
+        name: "{{ url_agent_centos7 }}"
+        state: present
+        lock_timeout : 180
+
+    - name: 
+      yum:
+        name: epel-release
+        enablerepo: extras
+        state: present
+        lock_timeout : 180
+    
+    - name: Pegando InstanceID
+      uri:
+        url: http://169.254.169.254/latest/meta-data/instance-id
+        return_content: yes
+      register: id
+      when: zabbix_hostname == ""
+
+    - set_fact:
+        zabbix_hostname={{ id.content }}
+      when: zabbix_hostname == ""
+
+    - name: Aplicando config do Zabbix
+      template:
+        src: templates/zabbix_agentd.conf.j2
+        dest: /etc/zabbix/zabbix_agentd.conf
+      notify:
+        - Restart Zabbix Agent
+
+    - name: Iniciar Zabbix com sistema
+      service:
+        name: zabbix-agent
+        enabled: yes
