@@ -11,7 +11,7 @@
 ## Playbook example
 ```
 ---
-- name: Install Zabbix Server
+- name: Install Zabbix-agent
   hosts: all
   become: yes
   roles:
