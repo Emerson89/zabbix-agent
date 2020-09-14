@@ -6,7 +6,7 @@
 ![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
 ![Badge](https://img.shields.io/badge/CentOS-7-blue)
 
-# Insert the main file from the directory defaults to the zabbix-server ip
+## Insert the main file from the directory defaults to the zabbix-server ip
 
 ## Edit the inventory file
 
