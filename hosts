@@ -1,6 +1,6 @@
 #Exemplo instalação aws
-##x.x.x.x ansible_ssh_private_key_file=~/Docs/pems/chave.pem ansible_user=centos
+54.198.82.225 ansible_ssh_private_key_file=/home/emerson/Documentos/Mandic/mandic.pem ansible_user=centos
 
 ##Exemplo instalação on-premisse
-[zabbix]
-x.x.x.x
+##[zabbix]
+##x.x.x.x

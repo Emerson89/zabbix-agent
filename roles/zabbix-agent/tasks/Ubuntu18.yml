@@ -20,7 +20,6 @@
         zabbix_hostname={{ id.content }}
       when: zabbix_hostname == ""
 
-
     - name: Aplicando config do Zabbix
       template:
         src: templates/zabbix_agentd.conf.j2
