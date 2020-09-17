@@ -6,6 +6,16 @@
 ![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
 ![Badge](https://img.shields.io/badge/CentOS-7-blue)
 
+## This recipe accepts the following distros
+- Amazon
+- CentOS6
+- CentOS7
+- Debian7
+- Debian9
+- Ubuntu16
+- Ubuntu18
+- Ubuntu20
+
 ## Insert the main file from the directory defaults to the zabbix-server ip
 
 ## Edit the inventory file

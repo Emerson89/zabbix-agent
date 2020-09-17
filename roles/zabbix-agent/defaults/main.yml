@@ -1,6 +1,7 @@
 ---
-zabbix_hostname: ""
+zabbix_hostname: "{{ ansible_hostname }}"
 zabbix_server_ip: 'SERVER'
+#zabbix_hostmetadata: 'os-linux'
 url_agent_centos6: "http://repo.zabbix.com/zabbix/4.4/rhel/6/x86_64/zabbix-agent-4.4.10-1.el6.x86_64.rpm"
 url_agent_centos7: "http://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/zabbix-agent-4.4.10-1.el7.x86_64.rpm"
 url_agent_amazonna: "http://repo.zabbix.com/zabbix/4.4/rhel/6/x86_64/zabbix-agent-4.4.10-1.el6.x86_64.rpm"
