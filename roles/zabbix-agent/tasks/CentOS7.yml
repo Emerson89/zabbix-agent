@@ -25,7 +25,7 @@
       notify:
         - Restart Zabbix Agent
 
-    - name: Iniciar Zabbix com sistema
+    - name: Iniciar Zabbix no boot
       service:
         name: zabbix-agent
         enabled: yes
