@@ -16,8 +16,6 @@
 - Ubuntu18
 - Ubuntu20
 
-## Insert the main file from the directory defaults to the zabbix-server ip
-
 ## Edit the inventory file
 
 ## Playbook example
@@ -25,6 +23,8 @@
 ---
 - name: Install Zabbix-agent
   hosts: all
+  vars:
+    zabbix_server_ip: 'SERVER'
   become: yes
   roles:
   - zabbix-agent
