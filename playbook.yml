@@ -1,6 +1,8 @@
 ---
 - name: Install Zabbix-agent
   hosts: all
+  vars:
+    zabbix_server_ip: 'SERVER'
   become: yes
   roles:
   - zabbix-agent
