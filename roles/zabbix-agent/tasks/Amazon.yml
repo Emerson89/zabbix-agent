@@ -10,7 +10,7 @@
     
   - name: Instalando Zabbix Agent para Amazon 2
     yum:
-      name: "{{ url_agent_amazonna2}}"
+      name: "{{ url_agent_amazonna2 }}"
       state: present
     ignore_errors: True
     when: ansible_distribution_version == "2"
@@ -23,7 +23,7 @@
 
   - name: Aplicando config do Zabbix
     template:
-      src: templates/zabbix_agentd.conf.j2
+      src: zabbix_agentd.conf.j2
       dest: /etc/zabbix/zabbix_agentd.conf
     notify:
       - Restart Zabbix Agent

@@ -7,7 +7,7 @@
 ![Badge](https://img.shields.io/badge/CentOS-7-blue)
 
 ## This recipe accepts the following distros
-- Amazon
+- Amazon1/2
 - CentOS6
 - CentOS7
 - Debian7
@@ -25,6 +25,7 @@
   hosts: all
   vars:
     zabbix_server_ip: 'SERVER'
+    zabbix_version: 4.4
   become: yes
   roles:
   - zabbix-agent

@@ -1,0 +1,96 @@
+---
+- name: Set some fact
+  set_fact:
+    zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
+
+- name: Install packages dependencies
+  apt:
+    name:
+        - epel-release
+        - net-tools
+        - vim
+        - wget
+        - telnet
+        - rsync
+        - git
+        - python3
+        - python3-pip
+    state: present
+
+- name: Only run update
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Add an Apt signing key zabbix
+  apt_key:
+    url: http://repo.zabbix.com/zabbix-official-repo.key
+    state: present
+
+- name: Install repo zabbix
+  apt_repository:
+    repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+  when: 
+   - zabbix_repo == "zabbix"
+   - ansible_distribution == "Ubuntu"
+  with_items:
+    - deb-src
+    - deb
+
+- name: Install repo zabbix
+  apt_repository:
+    repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/debian {{ ansible_distribution_release }} main"
+    state: present
+  when: 
+   - zabbix_repo == "zabbix"
+   - ansible_distribution == "Debian"
+  with_items:
+    - deb-src
+    - deb
+
+- name: Install Zabbix-agent
+  apt:
+    name: 
+    - zabbix-agent
+  when: zabbix_version <= 4.4
+
+- name: Install Zabbix-agent2
+  apt:
+    name: 
+    - zabbix-agent2
+  when: zabbix_version >= 5.0
+
+- name: user zabbix in visudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: 'zabbix ALL=NOPASSWD: ALL'
+        
+- name: Aplicando config do Zabbix-agentd
+  template:
+   src: zabbix_agentd.conf.j2
+   dest: /etc/zabbix/zabbix_agentd.conf
+  notify:
+    - Restart Zabbix Agent
+  when: zabbix_version <= 4.4
+
+- name: Aplicando config do Zabbix-agent2
+  template:
+   src: zabbix_agent2.conf.j2
+   dest: /etc/zabbix/zabbix_agent2.conf
+  notify:
+    - Restart Zabbix Agent2
+  when: zabbix_version => 5.0
+
+- name: Iniciar Zabbix no boot
+  service:
+    name: zabbix-agent
+    enabled: yes
+  when: zabbix_version <= 4.4
+
+- name: Iniciar Zabbix-agent2 no boot
+  service:
+    name: zabbix-agent2
+    enabled: yes
+  when: zabbix_version => 5.0
