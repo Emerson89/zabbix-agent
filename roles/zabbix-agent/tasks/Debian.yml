@@ -20,7 +20,6 @@
 - name: Only run update
   apt:
     update_cache: yes
-    upgrade: yes
 
 - name: Add an Apt signing key zabbix
   apt_key:
@@ -81,7 +80,7 @@
    dest: /etc/zabbix/zabbix_agent2.conf
   notify:
     - Restart Zabbix Agent2
-  when: zabbix_version => 5.0
+  when: zabbix_version >= 5.0
 
 - name: Iniciar Zabbix no boot
   service:
@@ -93,4 +92,4 @@
   service:
     name: zabbix-agent2
     enabled: yes
-  when: zabbix_version => 5.0
+  when: zabbix_version >= 5.0
