@@ -3,23 +3,16 @@
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
 
-- name: Install packages dependencies
-  apt:
-    name:
-        - epel-release
-        - net-tools
-        - vim
-        - wget
-        - telnet
-        - rsync
-        - git
-        - python3
-        - python3-pip
-    state: present
-
 - name: Only run update
   apt:
     update_cache: yes
+
+- name: Install packages dependencies
+  apt:
+    name:
+        - python3
+        - python3-pip
+    state: present
 
 - name: Add an Apt signing key zabbix
   apt_key:
