@@ -1,3 +1,2 @@
 [zabbix]
 centos ansible_connection=docker
-ubuntu ansible_connection=docker
