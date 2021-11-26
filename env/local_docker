@@ -1,2 +1,2 @@
 [zabbix]
-centos ansible_connection=docker
+debian ansible_connection=docker
