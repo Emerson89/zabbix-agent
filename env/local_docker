@@ -1,2 +1,0 @@
-[zabbix]
-debian ansible_connection=docker

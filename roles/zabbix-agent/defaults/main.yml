@@ -1,7 +1,8 @@
 ---
 zabbix_hostname: "{{ ansible_hostname }}"
 zabbix_hostmetadata: 'os-linux'
-zabbix_version: 5.0
+zabbix_version: 4.4
+zabbix_server_ip: 127.0.0.1
 url_agent_amazonna: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/6/x86_64/zabbix-agent-{{ zabbix_version }}.10-1.el6.x86_64.rpm"
 url_agent_amazonna2: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/x86_64/zabbix-agent-{{ zabbix_version }}.10-1.el7.x86_64.rpm"
 zabbix_repo: zabbix
