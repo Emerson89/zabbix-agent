@@ -9,6 +9,7 @@
 - Amazon1/2
 - CentOS6
 - CentOS7
+- CentOs8
 - Debian7
 - Debian9
 - Ubuntu16
