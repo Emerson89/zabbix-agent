@@ -3,10 +3,6 @@
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
 
-- name: Only run update
-  apt:
-    update_cache: yes
-
 - name: Install packages dependencies
   apt:
     name:
@@ -45,13 +41,13 @@
   apt:
     name: 
     - zabbix-agent
-  when: zabbix_version <= '4.4'
+  when: zabbix_version <= 4.4
 
 - name: Install Zabbix-agent2
   apt:
     name: 
     - zabbix-agent2
-  when: zabbix_version >= '5.0'
+  when: zabbix_version >= 5.0
 
 - name: user zabbix in visudoers
   lineinfile:
@@ -65,7 +61,7 @@
    dest: /etc/zabbix/zabbix_agentd.conf
   notify:
     - Restart Zabbix Agent
-  when: zabbix_version <= '4.4'
+  when: zabbix_version <= 4.4
 
 - name: Aplicando config do Zabbix-agent2
   template:
@@ -73,16 +69,16 @@
    dest: /etc/zabbix/zabbix_agent2.conf
   notify:
     - Restart Zabbix Agent2
-  when: zabbix_version >= '5.0'
+  when: zabbix_version >= 5.0
 
 - name: Iniciar Zabbix no boot
   service:
     name: zabbix-agent
     enabled: yes
-  when: zabbix_version <= '4.4'
+  when: zabbix_version <= 4.4
 
 - name: Iniciar Zabbix-agent2 no boot
   service:
     name: zabbix-agent2
     enabled: yes
-  when: zabbix_version >= '5.0'
+  when: zabbix_version >= 5.0
