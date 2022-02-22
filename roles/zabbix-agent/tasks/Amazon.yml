@@ -13,13 +13,57 @@
       name: "{{ url_agent_amazonna2 }}"
       state: present
     ignore_errors: True
-    when: ansible_distribution_version == "2"
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_version <= 4.4
 
   - name: Instalando Zabbix Agent para Amazon
     yum:
       name: "{{ url_agent_amazonna }}"
       state: present
-    when: ansible_distribution_version == "1" or ansible_distribution_version == "NA"
+    when: 
+     - ansible_distribution_version == "1"
+     - ansible_distribution_version == "NA" 
+     - zabbix_version <= 4.4
+  
+  - name: Instalando Zabbix Agent para Amazon 2
+    yum:
+      name: "{{ url_agent2_amazonna2 }}"
+      state: present
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_version >= 5.0
+  
+  - name: Aplicando config do Zabbix-agentd
+    template:
+     src: zabbix_agentd.conf.j2
+     dest: /etc/zabbix/zabbix_agentd.conf
+    notify:
+     - Restart Zabbix Agent
+    when: zabbix_version <= 4.4
+
+  - name: Aplicando config do Zabbix-agent2
+    template:
+     src: zabbix_agent2.conf.j2
+     dest: /etc/zabbix/zabbix_agent2.conf
+    notify:
+    - Restart Zabbix Agent2
+    when: zabbix_version >= 5.0
+
+  - name: Iniciar Zabbix no boot
+    service:
+     name: zabbix-agent
+     state: restarted
+     enabled: yes
+    when: zabbix_version <= 4.4
+
+  - name: Iniciar Zabbix-agent2 no boot
+    service:
+     name: zabbix-agent2
+     state: restarted
+     enabled: yes
+    when: zabbix_version >= 5.0
 
   - name: Aplicando config do Zabbix
     template:

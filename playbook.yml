@@ -2,8 +2,8 @@
 - name: Install Zabbix-agent
   hosts: localhost
   #vars:
-  #  zabbix_server_ip: 'SERVER'
+  #  zabbix_server_ip: '192.168.33.10'
   #  zabbix_version: 5.0
-  become: yes
+  become: true
   roles:
   - zabbix-agent

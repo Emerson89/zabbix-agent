@@ -1,4 +1,4 @@
-## Provision zabbix-agent using ansible
+## Provision zabbix-agent 1 e 2 using ansible
 
 ![Badge](https://img.shields.io/badge/ansible-zabbix-red)
 
@@ -12,6 +12,7 @@
 - CentOs8
 - Debian7
 - Debian9
+- Debian10
 - Ubuntu16
 - Ubuntu18
 - Ubuntu20

@@ -5,6 +5,7 @@ zabbix_version: 4.4
 zabbix_server_ip: 127.0.0.1
 url_agent_amazonna: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/6/x86_64/zabbix-agent-{{ zabbix_version }}.10-1.el6.x86_64.rpm"
 url_agent_amazonna2: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/x86_64/zabbix-agent-{{ zabbix_version }}.10-1.el7.x86_64.rpm"
+url_agent2_amazonna2: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/x86_64/zabbix-agent2-{{ zabbix_version }}.20-1.el7.x86_64.rpm"
 zabbix_repo: zabbix
 zabbix_repo_yum:
   - name: zabbix
