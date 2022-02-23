@@ -30,10 +30,10 @@
 | zabbix_server_ip | IP zabbix-server | 127.0.0.1| 
 
 ## Importante
- Deve se escolher uma ou as duas variaveis `zabbix_agent_install` e `zabbix_agent2_install` passando para "True", inserindo as duas será instalado os dois tipos em portas diferentes para que o processo de instalação seja realizado, caso queira somente atualizar a versão do agent utilize as variáveis `zabbix_agent_update` ou `zabbix_agent2_update`:
+ Deve se escolher uma ou as duas variaveis **zabbix_agent_install** e **zabbix_agent2_install** passando para **True** para que o processo de instalação seja realizado, inserindo as duas será instalado os dois tipos em portas diferentes, caso queira somente atualizar a versão do agent utilize as variáveis **zabbix_agent_update** ou **zabbix_agent2_update**:
   
-  - 10050: zabbix-agent 
-  - 10052: zabbix-agent2  
+  - 10050: **zabbix-agent** 
+  - 10052: **zabbix-agent2**  
  
 ## Edite o arquivo de inventário
 
