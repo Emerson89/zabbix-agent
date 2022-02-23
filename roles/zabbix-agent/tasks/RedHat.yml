@@ -2,13 +2,6 @@
 - name: Set some fact
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
-
-- name: Install packages dependencies
-  yum:
-    name:
-        - python3
-        - python3-pip
-    state: present
     
 - name: Install Zabbix Repo.
   yum_repository:
@@ -22,15 +15,31 @@
 
 - name: Install Zabbix-agent
   yum:
-    name: 
-    - zabbix-agent
-  when: zabbix_version <= 4.4
+    name: zabbix-agent
+    state: latest
+  when: zabbix_agent_install
 
 - name: Install Zabbix-agent2
   yum:
-    name: 
-    - zabbix-agent2
-  when: zabbix_version >= 5.0
+    name: zabbix-agent2
+    state: latest
+  when:
+   - zabbix_agent2_install 
+   - zabbix_version >= 5.0
+
+- name: Update Zabbix-agent
+  yum:
+    name: zabbix-agent
+    state: latest
+  when: zabbix_agent_update 
+
+- name: Update Zabbix-agent2
+  yum:
+    name: zabbix-agent2
+    state: latest
+  when:
+   - zabbix_agent2_update
+   - zabbix_version >= 5.0
 
 - name: user zabbix in visudoers
   lineinfile:
@@ -44,7 +53,7 @@
    dest: /etc/zabbix/zabbix_agentd.conf
   notify:
     - Restart Zabbix Agent
-  when: zabbix_version <= 4.4
+  when: zabbix_agent_update or zabbix_agent_install
 
 - name: Aplicando config do Zabbix-agent2
   template:
@@ -52,21 +61,25 @@
    dest: /etc/zabbix/zabbix_agent2.conf
   notify:
     - Restart Zabbix Agent2
-  when: zabbix_version >= 5.0
+  when:
+   - zabbix_agent2_update or zabbix_agent2_install
+   - zabbix_version >= 5.0
 
 - name: Iniciar Zabbix no boot
   service:
     name: zabbix-agent
     state: restarted
     enabled: yes
-  when: zabbix_version <= 4.4
+  when: zabbix_agent_update or zabbix_agent_install
 
 - name: Iniciar Zabbix-agent2 no boot
   service:
     name: zabbix-agent2
     state: restarted
     enabled: yes
-  when: zabbix_version >= 5.0
+  when:
+   - zabbix_agent2_update or zabbix_agent2_install
+   - zabbix_version >= 5.0
 
   
 

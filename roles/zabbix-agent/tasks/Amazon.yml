@@ -15,7 +15,16 @@
     ignore_errors: True
     when: 
      - ansible_distribution_version == "2"
-     - zabbix_version <= 4.4
+     - zabbix_agent_install
+  
+  - name: Update Zabbix Agent para Amazon 2
+    yum:
+      name: "{{ url_agent_amazonna2 }}"
+      state: latest
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_agent_update
 
   - name: Instalando Zabbix Agent para Amazon
     yum:
@@ -33,15 +42,27 @@
     ignore_errors: True
     when: 
      - ansible_distribution_version == "2"
+     - zabbix_agent2_install
      - zabbix_version >= 5.0
   
+  - name: Update Zabbix Agent para Amazon 2
+    yum:
+      name: "{{ url_agent2_amazonna2 }}"
+      state: latest
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_agent2_update
+     - zabbix_version >= 5.0
+
   - name: Aplicando config do Zabbix-agentd
     template:
      src: zabbix_agentd.conf.j2
      dest: /etc/zabbix/zabbix_agentd.conf
     notify:
      - Restart Zabbix Agent
-    when: zabbix_version <= 4.4
+    when: 
+     - zabbix_agent_update or zabbix_agent_install
 
   - name: Aplicando config do Zabbix-agent2
     template:
@@ -49,28 +70,25 @@
      dest: /etc/zabbix/zabbix_agent2.conf
     notify:
     - Restart Zabbix Agent2
-    when: zabbix_version >= 5.0
+    when:
+     - zabbix_agent2_update or zabbix_agent2_install
+     - zabbix_version >= 5.0
 
   - name: Iniciar Zabbix no boot
     service:
      name: zabbix-agent
      state: restarted
      enabled: yes
-    when: zabbix_version <= 4.4
+    when: zabbix_agent_update or zabbix_agent_install
 
   - name: Iniciar Zabbix-agent2 no boot
     service:
      name: zabbix-agent2
      state: restarted
      enabled: yes
-    when: zabbix_version >= 5.0
-
-  - name: Aplicando config do Zabbix
-    template:
-      src: zabbix_agentd.conf.j2
-      dest: /etc/zabbix/zabbix_agentd.conf
-    notify:
-      - Restart Zabbix Agent
+    when:
+     - zabbix_agent2_update or zabbix_agent2_install
+     - zabbix_version >= 5.0
 
   - name: Iniciar Zabbix com boot
     service:
