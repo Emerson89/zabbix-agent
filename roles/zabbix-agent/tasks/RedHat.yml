@@ -63,8 +63,18 @@
     - Restart Zabbix Agent2
   when:
    - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= 5.0
+   - zabbix_version >= 5.0 and zabbix_version < 6.0
 
+- name: Aplicando config do Zabbix-agent2 v6
+  template:
+    src: zabbix_agent2.conf.v6.j2
+    dest: /etc/zabbix/zabbix_agent2.conf
+  notify:
+    - Restart Zabbix Agent2
+  when:
+    - zabbix_agent2_update or zabbix_agent2_install
+    - zabbix_version == 6.0
+      
 - name: Iniciar Zabbix no boot
   service:
     name: zabbix-agent

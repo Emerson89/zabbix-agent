@@ -10,12 +10,12 @@
 - CentOS6
 - CentOS7
 - CentOs8
-- Debian7
-- Debian9
+- Rocky8
 - Debian10
-- Ubuntu16
 - Ubuntu18
 - Ubuntu20
+
+## Habilitado para nova versão 6.0
 
 ## Variáveis
 
@@ -43,7 +43,7 @@
 - name: Install Zabbix-agent
   hosts: all
   vars:
-    zabbix_server_ip: 'SERVER'
+    zabbix_server_ip: 'IP-SERVER'
     zabbix_version: 4.4
     zabbix_agent_install ou zabbix_agent2_install: True
     ### Variáveis de atualização somente quando for atualizar 

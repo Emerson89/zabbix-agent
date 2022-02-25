@@ -7,7 +7,8 @@
       path: /etc/sudoers
       state: present
       line: 'zabbix ALL=NOPASSWD: ALL'
-    
+  
+  ##Install agent 1
   - name: Instalando Zabbix Agent para Amazon 2
     yum:
       name: "{{ url_agent_amazonna2 }}"
@@ -25,6 +26,27 @@
     when: 
      - ansible_distribution_version == "2"
      - zabbix_agent_update
+  
+  ## INstall agent 6.0
+  - name: Instalando Zabbix Agent 2 v6 para Amazon 2
+    yum:
+      name: "{{ url_agent2_v6_amazonna2 }}"
+      state: present
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_agent2_install
+     - zabbix_version == 6.0 
+
+  - name: Update Zabbix Agent 2 v6 para Amazon 2
+    yum:
+      name: "{{ url_agent2_v6_amazonna2 }}"
+      state: latest
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_agent_update
+     - zabbix_version == 6.0 
 
   - name: Instalando Zabbix Agent para Amazon
     yum:
@@ -43,7 +65,7 @@
     when: 
      - ansible_distribution_version == "2"
      - zabbix_agent2_install
-     - zabbix_version >= 5.0
+     - zabbix_version >= 5.0 and zabbix_version < 6.0 
   
   - name: Update Zabbix Agent para Amazon 2
     yum:
@@ -53,7 +75,7 @@
     when: 
      - ansible_distribution_version == "2"
      - zabbix_agent2_update
-     - zabbix_version >= 5.0
+     - zabbix_version >= 5.0 and zabbix_version < 6.0
 
   - name: Aplicando config do Zabbix-agentd
     template:
@@ -72,7 +94,17 @@
     - Restart Zabbix Agent2
     when:
      - zabbix_agent2_update or zabbix_agent2_install
-     - zabbix_version >= 5.0
+     - zabbix_version >= 5.0 and zabbix_version < 6.0
+  
+  - name: Aplicando config do Zabbix-agent2 v6
+    template:
+      src: zabbix_agent2.conf.v6.j2
+      dest: /etc/zabbix/zabbix_agent2.conf
+    notify:
+     - Restart Zabbix Agent2
+    when:
+      - zabbix_agent2_update or zabbix_agent2_install
+      - zabbix_version == 6.0
 
   - name: Iniciar Zabbix no boot
     service:
@@ -88,9 +120,10 @@
      enabled: yes
     when:
      - zabbix_agent2_update or zabbix_agent2_install
-     - zabbix_version >= 5.0
+     - zabbix_version > 5.0
 
   - name: Iniciar Zabbix com boot
     service:
       name: zabbix-agent
       enabled: yes
+    when: zabbix_agent_update or zabbix_agent_install
