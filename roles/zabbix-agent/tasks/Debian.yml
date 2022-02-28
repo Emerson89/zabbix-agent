@@ -3,6 +3,11 @@
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
 
+- name: Remove specified repository from sources list
+  apt_repository:
+    repo: zabbix
+    state: absent
+
 - name: Add an Apt signing key zabbix
   apt_key:
     url: http://repo.zabbix.com/zabbix-official-repo.key
@@ -13,7 +18,7 @@
     repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu {{ ansible_distribution_release }} main"
     state: present
   when: 
-   - zabbix_repo == "zabbix-repo"
+   - zabbix_repo == "zabbix"
    - ansible_distribution == "Ubuntu"
   with_items:
     - deb-src
@@ -24,7 +29,7 @@
     repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/debian {{ ansible_distribution_release }} main"
     state: present
   when: 
-   - zabbix_repo == "zabbix-repo"
+   - zabbix_repo == "zabbix"
    - ansible_distribution == "Debian"
   with_items:
     - deb-src
