@@ -21,8 +21,7 @@
 
 - name: Install repo Zabbix-agent
   apt:
-    name: https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu/pool/main/z/zabbix/zabbix-agent2_{{ zabbix_version }}.0.0-1+ubuntu{{ ansible_distribution_version }}_amd64.deb
-    state: present
+    deb: https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu/pool/main/z/zabbix/zabbix-agent2_{{ zabbix_version }}.0.0-1+ubuntu{{ ansible_distribution_version }}_amd64.deb
   when:
     - zabbix_agent2_update or zabbix_agent2_install
     - zabbix_version == 6.0
