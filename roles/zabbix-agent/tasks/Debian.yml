@@ -8,23 +8,23 @@
     url: http://repo.zabbix.com/zabbix-official-repo.key
     state: present
 
-- name: Install repo zabbix
-  apt_repository:
-    repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu {{ ansible_distribution_release }} main"
-    state: present
-  when: 
-   - zabbix_repo == "zabbix"
-   - ansible_distribution == "Ubuntu"
-  with_items:
-    - deb-src
-    - deb
+#- name: Install repo zabbix
+#  apt_repository:
+#    repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu {{ ansible_distribution_release }} main"
+#    state: present
+#  when: 
+#   - zabbix_repo == "zabbix"
+#   - ansible_distribution == "Ubuntu"
+#  with_items:
+#    - deb-src
+#    - deb
 
-#- name: Install repo Zabbix-agent
-#  apt:
-#    deb: https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu/pool/main/z/zabbix/zabbix-agent2_{{ zabbix_version }}.0.0-1+ubuntu{{ ansible_distribution_version }}_amd64.deb
-#  when:
-#    - zabbix_agent2_install
-#    - zabbix_version == '6.0'
+- name: Install repo Zabbix-agent
+  apt:
+    deb: https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu/pool/main/z/zabbix/zabbix-agent_{{ zabbix_version }}.0-1+ubuntu{{ ansible_distribution_version }}_amd64.deb
+  when:
+    - zabbix_agent_install
+    - zabbix_version == '5.0'
   
 - name: Install repo zabbix
   apt_repository:
