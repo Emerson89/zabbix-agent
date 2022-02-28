@@ -13,7 +13,7 @@
     repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/ubuntu {{ ansible_distribution_release }} main"
     state: present
   when: 
-   - zabbix_repo == "zabbix"
+   - zabbix_repo == "zabbix-repo"
    - ansible_distribution == "Ubuntu"
   with_items:
     - deb-src
@@ -24,7 +24,7 @@
     repo: "{{ item }} https://repo.zabbix.com/zabbix/{{ zabbix_version }}/debian {{ ansible_distribution_release }} main"
     state: present
   when: 
-   - zabbix_repo == "zabbix"
+   - zabbix_repo == "zabbix-repo"
    - ansible_distribution == "Debian"
   with_items:
     - deb-src
