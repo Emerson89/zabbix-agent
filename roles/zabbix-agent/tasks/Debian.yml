@@ -42,7 +42,7 @@
     state: present
   when:
    - zabbix_agent2_install
-   - zabbix_version >= 5.0
+   - zabbix_version >= '5.0'
 
 - name: Update Zabbix-agent
   apt:
@@ -56,7 +56,7 @@
     state: latest
   when:
    - zabbix_agent2_update
-   - zabbix_version >= 5.0
+   - zabbix_version >= '5.0'
 
 - name: user zabbix in visudoers
   lineinfile:
@@ -81,7 +81,7 @@
     - Restart Zabbix Agent2
   when:
    - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= 5.0 and zabbix_version < 6.0
+   - zabbix_version >= '5.0' and zabbix_version < '6.0'
 
 - name: Aplicando config do Zabbix-agent2 v6
   template:
@@ -91,7 +91,7 @@
     - Restart Zabbix Agent2
   when:
     - zabbix_agent2_update or zabbix_agent2_install
-    - zabbix_version == 6.0
+    - zabbix_version == '6.0'
 
 - name: Iniciar Zabbix no boot
   service:
@@ -105,4 +105,4 @@
     enabled: yes
   when:
    - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= 5.0
+   - zabbix_version >= '5.0'
