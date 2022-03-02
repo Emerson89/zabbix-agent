@@ -1,4 +1,4 @@
-## Instalação e update zabbix-agent 1 e 2 using ansible
+## Instalação e update zabbix-agent 1 e 2 usando ansible
 
 ![Badge](https://img.shields.io/badge/ansible-zabbix-red)
 
@@ -28,6 +28,8 @@
 | zabbix_agent_update | Se será feita update de versão do agentd | False |
 | zabbix_agent_install | Se irá instalar zabbix-agentd | False | 
 | zabbix_server_ip | IP zabbix-server | 127.0.0.1| 
+| porta_agent2 | porta utilizada agent2 | 10052 |
+| porta_agent | porta utilizada agent | 10050 |
 
 ## Importante
  Deve se escolher uma ou as duas variaveis **zabbix_agent_install** e **zabbix_agent2_install** passando para **True** para que o processo de instalação seja realizado, inserindo as duas será instalado os dois tipos em portas diferentes, caso queira somente atualizar a versão do agent utilize as variáveis **zabbix_agent_update** ou **zabbix_agent2_update**:
