@@ -3,10 +3,10 @@
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
  
-- name: Remove Zabbix-agent
-  yum:
-     name: zabbix-agent
-     state: absent
+#- name: Remove Zabbix-agent
+#  yum:
+#     name: zabbix-agent
+#     state: absent
           
 - name: Install Zabbix Repo.
   yum_repository:

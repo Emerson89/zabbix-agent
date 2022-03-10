@@ -2,10 +2,10 @@
   - debug:
       msg: '{{ ansible_distribution_version }}'
  
-  - name: Remove Zabbix-agent
-    yum:
-     name: zabbix-agent
-     state: absent
+  #- name: Remove Zabbix-agent
+  #  yum:
+  #   name: zabbix-agent
+  #   state: absent
           
   - name: user zabbix in visudoers
     lineinfile:
