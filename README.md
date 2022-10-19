@@ -23,10 +23,10 @@
 |------|-----------|---------|
 | zabbix_version | Versão zabbix-server | 4.4|
 | zabbix_hostmetadata | hostmetadata para auto-registro | os-linux |
-| zabbix_agent2_update | Se será feita update de versão do agent2 | False |
-| zabbix_agent2_install | Se irá instalar zabbix-agent2 somente versão 5.0 acima | False | 
-| zabbix_agent_update | Se será feita update de versão do agentd | False |
-| zabbix_agent_install | Se irá instalar zabbix-agentd | False | 
+| zabbix_agent2_update | Será feita update de versão do agent2 | False |
+| zabbix_agent2_install | Irá instalar zabbix-agent2 somente versão 5.0 acima | False | 
+| zabbix_agent_update | Será feita update de versão do agentd | False |
+| zabbix_agent_install | Irá instalar zabbix-agentd | False | 
 | zabbix_server_ip | IP zabbix-server | 127.0.0.1| 
 | porta_agent2 | porta utilizada agent2 | 10052 |
 | porta_agent | porta utilizada agent | 10050 |
@@ -40,7 +40,7 @@
 ## Edite o arquivo de inventário
 
 ## Playbook example
-```
+```yaml
 ---
 - name: Install Zabbix-agent
   hosts: all

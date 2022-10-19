@@ -1,7 +1,7 @@
 ---
   - debug:
       msg: 
-       - '{{ ansible_distribution_release }}'
+       - '{{ ansible_distribution_version }}'
       
   - name: user zabbix in visudoers
     lineinfile:
@@ -9,42 +9,65 @@
       state: present
       line: 'zabbix ALL=NOPASSWD: ALL'
   
-  - name: Instalando Zabbix Agent para Amazon
+  ##Install agent 1
+  - name: Instalando Zabbix Agent para Amazon 2
     yum:
-      name: "{{ url_agent_amazonna }}"
+      name: "{{ url_agent_amazonna2 }}"
       state: present
+    ignore_errors: True
     when: 
-     - ansible_distribution_release == "NA" 
+     - ansible_distribution_version == "2"
      - zabbix_agent_install
   
-  - name: Update Zabbix Agent para Amazon 
+  - name: Update Zabbix Agent para Amazon 2
     yum:
-       name: "{{ url_agent_amazonna }}"
-       state: latest
+      name: "{{ url_agent_amazonna2 }}"
+      state: latest
     ignore_errors: True
     when: 
-     - ansible_distribution_release == "NA"
+     - ansible_distribution_version == "2"
      - zabbix_agent_update
   
-  - name: Instalando Zabbix Agent 2 v6 para Amazon
+  ## INstall agent 6.0
+  - name: Instalando Zabbix Agent 2 v6 para Amazon 2
     yum:
-      name: "{{ url_agent2_v6_amazonna }}"
+      name: "{{ url_agent2_v6_amazonna2 }}"
       state: present
     ignore_errors: True
     when: 
-     - ansible_distribution_release == "NA" 
+     - ansible_distribution_version == "2"
      - zabbix_agent2_install
-     - zabbix_version == '6.0'
+     - zabbix_version == '6.0' 
 
-  - name: Instalando Zabbix Agent 2 para Amazon
+  - name: Update Zabbix Agent 2 v6 para Amazon 2
     yum:
-      name: "{{ url_agent2_amazonna }}"
+      name: "{{ url_agent2_v6_amazonna2 }}"
+      state: latest
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_agent_update
+     - zabbix_version == '6.0' 
+  
+  - name: Instalando Zabbix Agent para Amazon 2
+    yum:
+      name: "{{ url_agent2_amazonna2 }}"
       state: present
     ignore_errors: True
     when: 
-     - ansible_distribution_release == "NA" 
+     - ansible_distribution_version == "2"
      - zabbix_agent2_install
      - zabbix_version >= '5.0' and zabbix_version < '6.0' 
+  
+  - name: Update Zabbix Agent para Amazon 2
+    yum:
+      name: "{{ url_agent2_amazonna2 }}"
+      state: latest
+    ignore_errors: True
+    when: 
+     - ansible_distribution_version == "2"
+     - zabbix_agent2_update
+     - zabbix_version >= '5.0' and zabbix_version < '6.0'
 
 ## Aplicando config e restart service
 

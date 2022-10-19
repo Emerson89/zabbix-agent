@@ -3,6 +3,17 @@
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
 
+- name: Only run update
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Instalar Dependencias
+  apt:
+    name:
+      - gpg
+    state: present
+
 - name: Add an Apt signing key zabbix
   apt_key:
     url: http://repo.zabbix.com/zabbix-official-repo.key
