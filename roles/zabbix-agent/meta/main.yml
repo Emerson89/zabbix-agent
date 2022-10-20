@@ -1,6 +1,6 @@
 galaxy_info:
-  author: your name
-  description: your description
+  author: Emerson Cesario
+  description: Instalação e atualização zabbix-agent e zabbix-agent2
   company: your company (optional)
 
   # If the issue tracker for your role is not on github, uncomment the

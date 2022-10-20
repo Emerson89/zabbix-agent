@@ -3,6 +3,17 @@
   set_fact:
     zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
 
+- name: Only run update
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Install Dependencias
+  apt:
+    name:
+      - gpg
+    state: present
+
 - name: Add an Apt signing key zabbix
   apt_key:
     url: http://repo.zabbix.com/zabbix-official-repo.key
@@ -30,10 +41,12 @@
     - deb-src
     - deb
 
+## INSTALL ZABBIX-AGENT
+
 - name: Install Zabbix-agent
   apt:
     name: zabbix-agent
-    state: latest
+    state: present
   when: zabbix_agent_install
 
 - name: Install Zabbix-agent2
@@ -41,8 +54,9 @@
     name: zabbix-agent2
     state: present
   when:
-   - zabbix_agent2_install
-   - zabbix_version >= '5.0'
+   - zabbix_agent2_install and zabbix_version is version_compare('5.0', '>=')
+
+## UPDATE ZABBIX-AGENT
 
 - name: Update Zabbix-agent
   apt:
@@ -55,54 +69,4 @@
     name: zabbix-agent2
     state: latest
   when:
-   - zabbix_agent2_update
-   - zabbix_version >= '5.0'
-
-- name: user zabbix in visudoers
-  lineinfile:
-    path: /etc/sudoers
-    state: present
-    line: 'zabbix ALL=NOPASSWD: ALL'
-        
-- name: Aplicando config do Zabbix-agentd
-  template:
-   src: zabbix_agentd.conf.j2
-   dest: /etc/zabbix/zabbix_agentd.conf
-  notify:
-    - Restart Zabbix Agent
-  when: 
-   - zabbix_agent_update or zabbix_agent_install
-
-- name: Aplicando config do Zabbix-agent2
-  template:
-   src: zabbix_agent2.conf.j2
-   dest: /etc/zabbix/zabbix_agent2.conf
-  notify:
-    - Restart Zabbix Agent2
-  when:
-   - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= '5.0' and zabbix_version < '6.0'
-
-- name: Aplicando config do Zabbix-agent2 v6
-  template:
-    src: zabbix_agent2.conf.v6.j2
-    dest: /etc/zabbix/zabbix_agent2.conf
-  notify:
-    - Restart Zabbix Agent2
-  when:
-    - zabbix_agent2_update or zabbix_agent2_install
-    - zabbix_version == '6.0'
-
-- name: Iniciar Zabbix no boot
-  service:
-    name: zabbix-agent
-    enabled: yes
-  when: zabbix_agent_update or zabbix_agent_install
-
-- name: Iniciar Zabbix-agent2 no boot
-  service:
-    name: zabbix-agent2
-    enabled: yes
-  when:
-   - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= '5.0'
+   - zabbix_agent2_update and zabbix_version is version_compare('5.0', '>=')
