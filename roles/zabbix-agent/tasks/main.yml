@@ -12,3 +12,55 @@
 
 - include_tasks: Debian.yml
   when: ansible_distribution_file_variety == 'Debian'
+
+## APPLY CONFIG E RESTART SERVICE
+
+- name: user zabbix in visudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: 'zabbix ALL=NOPASSWD: ALL'
+        
+- name: Aplicando config do Zabbix-agentd
+  template:
+   src: zabbix_agentd.conf.j2
+   dest: /etc/zabbix/zabbix_agentd.conf
+  notify:
+    - Restart Zabbix Agent
+  when: zabbix_agent_update or zabbix_agent_install
+
+- name: Aplicando config do Zabbix-agent2
+  template:
+   src: zabbix_agent2.conf.j2
+   dest: /etc/zabbix/zabbix_agent2.conf
+  notify:
+    - Restart Zabbix Agent2
+  when:
+   - zabbix_agent2_update or zabbix_agent2_install
+   - zabbix_version is version_compare('5.0', '>=') and zabbix_version is version_compare('6.0', '<')
+
+- name: Aplicando config do Zabbix-agent2 v6
+  template:
+    src: zabbix_agent2.conf.v6.j2
+    dest: /etc/zabbix/zabbix_agent2.conf
+  notify:
+    - Restart Zabbix Agent2
+  when:
+    - zabbix_agent2_update or zabbix_agent2_install
+    - zabbix_version is version_compare('6.0', '>=')
+      
+- name: Iniciar Zabbix no boot
+  service:
+    name: zabbix-agent
+    state: restarted
+    enabled: yes
+  when: zabbix_agent_update or zabbix_agent_install
+
+- name: Iniciar Zabbix-agent2 no boot
+  service:
+    name: zabbix-agent2
+    state: restarted
+    enabled: yes
+  when:
+   - zabbix_agent2_update or zabbix_agent2_install
+   - zabbix_version is version_compare('5.0', '>=')

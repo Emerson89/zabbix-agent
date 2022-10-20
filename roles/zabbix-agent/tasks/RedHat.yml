@@ -13,10 +13,12 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ zabbix_repo_yum }}"
 
+## INSTALL ZABBIX-AGENT
+
 - name: Install Zabbix-agent
   yum:
     name: zabbix-agent
-    state: latest
+    state: present
   when: zabbix_agent_install
 
 - name: Install Zabbix-agent2
@@ -24,8 +26,9 @@
     name: zabbix-agent2
     state: latest
   when:
-   - zabbix_agent2_install 
-   - zabbix_version >= '5.0'
+   - zabbix_agent2_install and zabbix_version is version_compare('5.0', '>=')
+
+## UPDATE ZABBIX-AGENT
 
 - name: Update Zabbix-agent
   yum:
@@ -38,58 +41,4 @@
     name: zabbix-agent2
     state: latest
   when:
-   - zabbix_agent2_update
-   - zabbix_version >= '5.0'
-
-- name: user zabbix in visudoers
-  lineinfile:
-    path: /etc/sudoers
-    state: present
-    line: 'zabbix ALL=NOPASSWD: ALL'
-        
-- name: Aplicando config do Zabbix-agentd
-  template:
-   src: zabbix_agentd.conf.j2
-   dest: /etc/zabbix/zabbix_agentd.conf
-  notify:
-    - Restart Zabbix Agent
-  when: zabbix_agent_update or zabbix_agent_install
-
-- name: Aplicando config do Zabbix-agent2
-  template:
-   src: zabbix_agent2.conf.j2
-   dest: /etc/zabbix/zabbix_agent2.conf
-  notify:
-    - Restart Zabbix Agent2
-  when:
-   - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= '5.0' and zabbix_version < '6.0'
-
-- name: Aplicando config do Zabbix-agent2 v6
-  template:
-    src: zabbix_agent2.conf.v6.j2
-    dest: /etc/zabbix/zabbix_agent2.conf
-  notify:
-    - Restart Zabbix Agent2
-  when:
-    - zabbix_agent2_update or zabbix_agent2_install
-    - zabbix_version == '6.0'
-      
-- name: Iniciar Zabbix no boot
-  service:
-    name: zabbix-agent
-    state: restarted
-    enabled: yes
-  when: zabbix_agent_update or zabbix_agent_install
-
-- name: Iniciar Zabbix-agent2 no boot
-  service:
-    name: zabbix-agent2
-    state: restarted
-    enabled: yes
-  when:
-   - zabbix_agent2_update or zabbix_agent2_install
-   - zabbix_version >= '5.0'
-
-  
-
+   - zabbix_agent2_update and zabbix_version is version_compare('5.0', '>=')

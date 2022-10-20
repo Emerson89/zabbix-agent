@@ -12,8 +12,10 @@
 - CentOs8
 - Rocky8
 - Debian10
+- Debian11 - Menos 4.4 abaixo
 - Ubuntu18
 - Ubuntu20
+- Ubuntu22
 
 ## Habilitado para nova versão 6.0
 
@@ -22,17 +24,18 @@
 | Nome | Descrição | Default | 
 |------|-----------|---------|
 | zabbix_version | Versão zabbix-server | 4.4|
+| zabbix_hostname | Hostname zabbix-agent | "{{ ansible_hostname }}" |
 | zabbix_hostmetadata | hostmetadata para auto-registro | os-linux |
 | zabbix_agent2_update | Será feita update de versão do agent2 | False |
-| zabbix_agent2_install | Irá instalar zabbix-agent2 somente versão 5.0 acima | False | 
-| zabbix_agent_update | Será feita update de versão do agentd | False |
-| zabbix_agent_install | Irá instalar zabbix-agentd | False | 
+| zabbix_agent2_install | Irá instalar zabbix-agent2 somente **versão 5.0** acima | False | 
+| zabbix_agent_update | Será feita update de versão do zabbix-agent 1 | False |
+| zabbix_agent_install | Irá instalar zabbix-agent 1 | False | 
 | zabbix_server_ip | IP zabbix-server | 127.0.0.1| 
 | porta_agent2 | porta utilizada agent2 | 10052 |
 | porta_agent | porta utilizada agent | 10050 |
 
 ## Importante
- Deve se escolher uma ou as duas variaveis **zabbix_agent_install** e **zabbix_agent2_install** passando para **True** para que o processo de instalação seja realizado, inserindo as duas será instalado os dois tipos em portas diferentes, caso queira somente atualizar a versão do agent utilize as variáveis **zabbix_agent_update** ou **zabbix_agent2_update**:
+ Deve se escolher uma ou as duas variaveis **zabbix_agent_install**(DEFAULT) e **zabbix_agent2_install** passando para **True** para que o processo de instalação seja realizado, inserindo as duas será instalado os dois tipos em portas diferentes, caso queira somente atualizar a versão do agent utilize as variáveis **zabbix_agent_update** ou **zabbix_agent2_update**:
   
   - 10050: **zabbix-agent** 
   - 10052: **zabbix-agent2**  

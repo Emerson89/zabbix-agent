@@ -1,5 +1,0 @@
-[zabbix]
-172.16.0.14 ansible_user='vagrant' ansible_ssh_private_key_file='.vagrant/machines/debian-srv/virtualbox/private_key'
-#172.16.0.15 ansible_user='vagrant' ansible_ssh_private_key_file='.vagrant/machines/ubuntu-srv/virtualbox/private_key'
-172.16.0.16 ansible_user='vagrant' ansible_ssh_private_key_file='.vagrant/machines/debian-buster-srv/virtualbox/private_key'
-#172.16.0.17 ansible_user='vagrant' ansible_ssh_private_key_file='.vagrant/machines/ubuntu-jammy-srv/virtualbox/private_key'
