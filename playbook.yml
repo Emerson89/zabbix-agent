@@ -5,6 +5,6 @@
     zabbix_server_ip: '192.168.33.12'
     zabbix_version: 5.0
     zabbix_agent_install: True
-  become: true
+  become: yes
   roles:
   - zabbix-agent

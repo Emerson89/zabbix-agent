@@ -5,12 +5,6 @@ zabbix_version: 4.4
 zabbix_server_ip: 127.0.0.1
 porta_agent2: 10052
 porta_agent: 10050
-url_agent_amazonna: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/6/x86_64/zabbix-agent-{{ zabbix_version }}.10-1.el6.x86_64.rpm"
-url_agent2_amazonna: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/6/x86_64/zabbix-agent2-{{ zabbix_version }}.10-1.el6.x86_64.rpm"
-url_agent2_v6_amazonna: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/6/x86_64/zabbix-agent2-{{ zabbix_version }}.0-1.el6.x86_64.rpm"
-url_agent_amazonna2: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/x86_64/zabbix-agent-{{ zabbix_version }}.10-1.el7.x86_64.rpm"
-url_agent2_amazonna2: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/x86_64/zabbix-agent2-{{ zabbix_version }}.9-1.el7.x86_64.rpm"
-url_agent2_v6_amazonna2: "http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/x86_64/zabbix-agent2-{{ zabbix_version }}.0-1.el7.x86_64.rpm"
 zabbix_repo: zabbix
 zabbix_repo_yum:
   - name: zabbix
@@ -25,6 +19,32 @@ zabbix_repo_yum:
     gpgcheck: 0
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
     state: present
+zabbix_amz_repo_yum:
+  - name: zabbix
+    description: Zabbix Official Repository - $basearch
+    baseurl: http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/6/$basearch/
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+    state: present
+  - name: zabbix-supported
+    description: Zabbix Official Repository non-supported - $basearch
+    baseurl: http://repo.zabbix.com/non-supported/rhel/6/$basearch/
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+    state: present
+zabbix_amz2_repo_yum:
+  - name: zabbix
+    description: Zabbix Official Repository - $basearch
+    baseurl: http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/7/$basearch/
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+    state: present
+  - name: zabbix-supported
+    description: Zabbix Official Repository non-supported - $basearch
+    baseurl: http://repo.zabbix.com/non-supported/rhel/7/$basearch/
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+    state: present              
 zabbix_agent_update: False
 zabbix_agent_install: False
 zabbix_agent2_install: False

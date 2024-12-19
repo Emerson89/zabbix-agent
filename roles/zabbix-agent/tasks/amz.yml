@@ -1,0 +1,44 @@
+---
+- name: Set some fact
+  set_fact:
+    zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
+          
+- name: Install Zabbix Repo.
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgcheck: "{{ item.gpgcheck }}"
+    gpgkey: "{{ item.gpgkey }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ zabbix_amz_repo_yum }}"
+
+## INSTALL ZABBIX-AGENT
+
+- name: Install Zabbix-agent
+  yum:
+    name: zabbix-agent
+    state: present
+  when: zabbix_agent_install
+
+- name: Install Zabbix-agent2
+  yum:
+    name: zabbix-agent2
+    state: latest
+  when:
+   - zabbix_agent2_install and zabbix_version is version_compare('5.0', '>=')
+
+## UPDATE ZABBIX-AGENT
+
+- name: Update Zabbix-agent
+  yum:
+    name: zabbix-agent
+    state: latest
+  when: zabbix_agent_update 
+
+- name: Update Zabbix-agent2
+  yum:
+    name: zabbix-agent2
+    state: latest
+  when:
+   - zabbix_agent2_update and zabbix_version is version_compare('5.0', '>=')

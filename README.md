@@ -11,13 +11,14 @@
 - CentOS7
 - CentOs8
 - Rocky8
+- Almalinux8
 - Debian10
 - Debian11 - Menos 4.4 abaixo
 - Ubuntu18
 - Ubuntu20
 - Ubuntu22
 
-## Habilitado para nova versão 6.0
+## Support version 7.0
 
 ## Variáveis
 
@@ -40,9 +41,15 @@
   - 10050: **zabbix-agent** 
   - 10052: **zabbix-agent2**  
  
-## Edite o arquivo de inventário
+## Example inventary
+
+```bash
+[zabbix-agent]
+172.16.33.10 ansible_ssh_private_key_file=./PATH/private_key ansible_user=vagrant
+```
 
 ## Playbook example
+
 ```yaml
 ---
 - name: Install Zabbix-agent
@@ -58,10 +65,17 @@
   - zabbix-agent
 ```
 ## Ou passe na execução do playbook conforme abaixo:
-``` 
+
+```bash 
 ansible-playbook -i hosts playbook.yml --extra-vars "zabbix_agent_install=True zabbix_version=5.0 zabbix_server_ip=127.0.0.1"
 
 ansible-playbook -i hosts playbook.yml --extra-vars "zabbix_agent_update=True zabbix_version=5.4 zabbix_server_ip=127.0.0.1"
 ``` 
+
+- setup
+```bash
+ansible -i hosts all -m setup |grep ansible_distribution
+```
+
 ## License
 ![Badge](https://img.shields.io/badge/license-GPLv3-green)

@@ -4,10 +4,10 @@
    - ansible_distribution_file_variety == 'RedHat'
    - ansible_distribution != "Amazon"
 
-- include_tasks: "{{ ansible_distribution }}-2.yml"
-  when: ansible_distribution  == "Amazon" and ansible_distribution_version == "2"
+- include_tasks: "amz2.yml"
+  when: ansible_distribution  == "Amazon" and ansible_distribution_version == "2" 
 
-- include_tasks: "{{ ansible_distribution }}.yml"
+- include_tasks: "amz.yml"
   when: ansible_distribution  == "Amazon" and ansible_distribution_release == "NA"
 
 - include_tasks: Debian.yml
