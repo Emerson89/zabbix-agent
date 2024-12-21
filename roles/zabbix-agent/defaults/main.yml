@@ -45,7 +45,7 @@ zabbix_amz2_repo_yum:
     gpgcheck: 0
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
     state: present              
-zabbix_agent_update: False
-zabbix_agent_install: False
-zabbix_agent2_install: False
-zabbix_agent2_update: False
+zabbix_agent_update: false
+zabbix_agent_install: false
+zabbix_agent2_install: false
+zabbix_agent2_update: false

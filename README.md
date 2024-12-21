@@ -1,11 +1,11 @@
-## Instalação e update zabbix-agent 1 e 2 usando ansible
+## Instalation and update zabbix-agent 1/2 using ansible
 
 ![Badge](https://img.shields.io/badge/ansible-zabbix-red)
 
 ## Dependências
 ![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
 
-## Esta receita aceita as seguintes distribuições
+## Support Operation Systems
 - Amazon1/2
 - CentOS6
 - CentOS7
@@ -13,35 +13,35 @@
 - Rocky8
 - Almalinux8
 - Debian10
-- Debian11 - Menos 4.4 abaixo
+- Debian11 - less 4.4 below
 - Ubuntu18
 - Ubuntu20
 - Ubuntu22
 
-## Support version 7.0
+## Support version 7.0 Zabbix
 
-## Variáveis
+## Variables
 
-| Nome | Descrição | Default | 
+| Name | Description | Default | 
 |------|-----------|---------|
-| zabbix_version | Versão zabbix-server | 4.4|
+| zabbix_version | Version zabbix-server | 4.4|
 | zabbix_hostname | Hostname zabbix-agent | "{{ ansible_hostname }}" |
-| zabbix_hostmetadata | hostmetadata para auto-registro | os-linux |
-| zabbix_agent2_update | Será feita update de versão do agent2 | False |
-| zabbix_agent2_install | Irá instalar zabbix-agent2 somente **versão 5.0** acima | False | 
-| zabbix_agent_update | Será feita update de versão do zabbix-agent 1 | False |
-| zabbix_agent_install | Irá instalar zabbix-agent 1 | False | 
-| zabbix_server_ip | IP zabbix-server | 127.0.0.1| 
-| porta_agent2 | porta utilizada agent2 | 10052 |
-| porta_agent | porta utilizada agent | 10050 |
+| zabbix_hostmetadata | hostmetadata for auto-registry | os-linux |
+| zabbix_agent2_update | Update version agent2 | false |
+| zabbix_agent2_install | Instalation zabbix-agent2 only **version 5.0** above | false | 
+| zabbix_agent_update | Update version zabbix-agent 1 | false |
+| zabbix_agent_install | Instalation zabbix-agent 1 | false | 
+| zabbix_server_ip | IP server zabbix-server | 127.0.0.1| 
+| porta_agent2 | Utilized port agent2 | 10052 |
+| porta_agent | Utilized port agent | 10050 |
 
-## Importante
- Deve se escolher uma ou as duas variaveis **zabbix_agent_install**(DEFAULT) e **zabbix_agent2_install** passando para **True** para que o processo de instalação seja realizado, inserindo as duas será instalado os dois tipos em portas diferentes, caso queira somente atualizar a versão do agent utilize as variáveis **zabbix_agent_update** ou **zabbix_agent2_update**:
+## Important
+You must choose one or both of the variables **zabbix_agent_install** and **zabbix_agent2_install** by going to **true** for the installation process to be performed, entering the two will install the two types on different ports, if you only want to update the agent version use the variables **zabbix_agent_update** or **zabbix_agent2_update**:
   
   - 10050: **zabbix-agent** 
   - 10052: **zabbix-agent2**  
  
-## Example inventary
+## Example inventory
 
 ```bash
 [zabbix-agent]
@@ -57,22 +57,23 @@
   vars:
     zabbix_server_ip: 'IP-SERVER'
     zabbix_version: 4.4
-    zabbix_agent_install ou zabbix_agent2_install: True
-    ### Variáveis de atualização somente quando for atualizar 
-    zabbix_agent_update ou zabbix_update2_install: True
-  become: true
+    zabbix_agent_install or zabbix_agent2_install: true
+    ### Variables of updates 
+    zabbix_agent_update or zabbix_update2_install: true
+  become: yes
   roles:
   - zabbix-agent
 ```
-## Ou passe na execução do playbook conforme abaixo:
+## Or pass the playbook execution as below:
 
 ```bash 
-ansible-playbook -i hosts playbook.yml --extra-vars "zabbix_agent_install=True zabbix_version=5.0 zabbix_server_ip=127.0.0.1"
+ansible-playbook -i hosts playbook.yml --extra-vars "zabbix_agent_install=true zabbix_version=5.0 zabbix_server_ip=127.0.0.1"
 
-ansible-playbook -i hosts playbook.yml --extra-vars "zabbix_agent_update=True zabbix_version=5.4 zabbix_server_ip=127.0.0.1"
+ansible-playbook -i hosts playbook.yml --extra-vars "zabbix_agent_update=true zabbix_version=5.4 zabbix_server_ip=127.0.0.1"
 ``` 
 
 - setup
+
 ```bash
 ansible -i hosts all -m setup |grep ansible_distribution
 ```
