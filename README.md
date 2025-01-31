@@ -2,8 +2,17 @@
 
 ![Badge](https://img.shields.io/badge/ansible-zabbix-red)
 
-## Dependências
-![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
+## Dependencies
+
+- ansible-2.16.6
+
+- python3.10
+
+## Install dependencies
+
+```bash
+pip install -r requirements.txt 
+```
 
 ## Support Operation Systems
 - Amazon1/2

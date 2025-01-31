@@ -2,9 +2,9 @@
 - name: Install Zabbix-agent
   hosts: all
   vars:
-    zabbix_server_ip: '192.168.33.12'
-    zabbix_version: 6.0
-    zabbix_agent_update: true
+    zabbix_server_ip: '172.16.33.10'
+    zabbix_version: 7.0
+    zabbix_agent_install: true
   become: yes
   roles:
   - zabbix-agent

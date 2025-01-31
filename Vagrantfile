@@ -9,7 +9,7 @@ vms = {
 #'debian-srv' => {'memory' => '1024', 'cpus' => '1', 'ip' => '14', 'box' => 'debian/buster64'},
 # 'ubuntu-srv' => {'memory' => '1024', 'cpus' => '1', 'ip' => '15', 'box' => 'ubuntu/focal64'},
 # 'debian-buster-srv' => {'memory' => '1024', 'cpus' => '1', 'ip' => '16', 'box' => 'debian/bullseye64'},
-'ubuntu-jammy-srv' => {'memory' => '2024', 'cpus' => '2', 'ip' => '17', 'box' => 'ubuntu/jammy64'},
+'ubuntu-jammy-srv' => {'memory' => '1024', 'cpus' => '2', 'ip' => '17', 'box' => 'ubuntu/jammy64'},
  }
 
 Vagrant.require_version '>= 2.0.0'
