@@ -8,7 +8,15 @@
 
 - python3.10
 
+- pip3 25.0
+
 ## Install dependencies
+
+- pip
+
+```bash
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+```
 
 ```bash
 pip install -r requirements.txt 
